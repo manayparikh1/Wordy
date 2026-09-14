@@ -21,11 +21,3 @@ YELLOW = "\033[43;30m"
 GRAY = "\033[100;37m"  # This means that the letter is not in the word at all
 
 RESET = "\033[0m"  # this makes the colour go back to normal
-
-DATA_DIR = Path(__file__).resolve().parent
-
-
-def load_word_list(filename):
-    path = DATA_DIR / filename
-    with open(path) as f:
-        return {line.strip().lower() for line in f if line.strip()}
