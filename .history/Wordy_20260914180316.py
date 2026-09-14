@@ -46,18 +46,7 @@ def compute_feedback(guess, secret):
 
     for i in range(WORD_LENGTH):
         if guess[i] == secret[i]:
-            feedback[i] = "green"
-            remaining[guess[i]] -= 1
-for i in range(WORD_LENGTH):
-    if feedback[i] == "green":
-        continue
-    letter = guess[i]
-    if remaining[letter] > 0:
-         feedback[i] = "yellow"
-         remaining[letter] -= 1
-return feedback
 
-def colorize(letter, status):
-    color = {"green": GREEN, "yellow": YELLOW, "gray": GRAY}[status]
-    return f"{color} {letter.upper()} {RESET}"
 
+feedback[i] = "green"
+remaining[guess[i]] -= 1

@@ -57,7 +57,5 @@ for i in range(WORD_LENGTH):
          remaining[letter] -= 1
 return feedback
 
-def colorize(letter, status):
-    color = {"green": GREEN, "yellow": YELLOW, "gray": GRAY}[status]
-    return f"{color} {letter.upper()} {RESET}"
+
 
