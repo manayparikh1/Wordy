@@ -9,7 +9,6 @@ Two word lists are connected alongside this script which include answers.txt and
 import random
 from collections import Counter
 from pathlib import Path
-import re
 
 MAX_GUESSES = 6
 WORD_LENGTH = 5
@@ -134,20 +133,6 @@ def play():
             print(render_row(g, fb))
         print()
         print(render_keyboard(letter_status))
-
-        if guess == secret:
-            print(f"\nYou got it in {attempt}/{MAX_GUESSES}!")
-            return
-
-        remaining = MAX_GUESSES - attempt
-        if remaining > 0:
-            print(f"\n{remaining} guess{'es' if remaining !=1 else ''} left.")
-
-
-    print(f"\nNo more guesses. The word was: {secret.upper()}")
- 
-
-
         
 
 
