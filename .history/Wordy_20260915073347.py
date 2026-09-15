@@ -122,8 +122,5 @@ def play():
     print("=" * 40)
     print(f"So you have {MAX_GUESSES} guesses to find the secret word. Good luck dude!")
     print("=" * 40)
-
-    for attempt in range(1, MAX_GUESSES + 1):
-        guess = get_guess(valid_guesses)
     
     
