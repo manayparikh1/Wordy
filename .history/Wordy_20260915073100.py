@@ -123,4 +123,3 @@ def play():
     print(f"So you have {MAX_GUESSES} guesses to find the secret word. Good luck dude!")
     print("=" * 35)
     
-    

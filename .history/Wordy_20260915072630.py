@@ -114,13 +114,4 @@ def play():
     answers = load_word_list("answers.txt")
     valid_guesses = load_word_list("valid_guesses.txt") | answers
     
-    secret = choose_secret(answers)
-    guesses_made = []
-    letter_status = {}
-
-    print("WORDY")
-    print("=" * 35)
-    print(f"So you have {MAX_GUESSES} guesses to find the secret word. Good luck dude!")
-    print("=" * 35)
-    
     
