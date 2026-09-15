@@ -79,9 +79,5 @@ def render_keyboard(letter_status):
                 tiles.append(f" {letter.upper()} ")
             lines.append(" ".join(tiles))
             return "\n".join(lines)
-def update_letter_status(letter_status, guess, feedback):
-
-    # the green beats the yellow and the yellow beats the gray so a letter never gets downgraded in the system
-    priority = {"gray": 0, "yellow": 2, "green": 3}
-    for letter, status in zip(guess, feedback):
-        current = letter_status.get(letter)
+        
+        
