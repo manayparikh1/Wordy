@@ -14,10 +14,6 @@ import re
 MAX_GUESSES = 6
 WORD_LENGTH = 5
 
-DATAMUSE_URL = "https://api.datamuse.com/words"
-DICTIONARY_URL = "https://api.dictionaryapi.dev/api/v2/entries/en"
-MIN_WORD_FREQUENCY = 3.0 # the higher the frequency more common words because theres a datamuse of "f" which I learned from MOSh youtube so hopefully this works.
-
 # these are the ansi colours that I have gotten from a website on google called stack overflow
 
 GREEN = "\033[42;30m"  # This means that the letter is in the correct spot
