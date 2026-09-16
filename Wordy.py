@@ -7,6 +7,7 @@ Two word lists are connected alongside this script which include answers.txt and
 """
 
 import random
+import requests
 from collections import Counter
 from pathlib import Path
 import re
@@ -98,9 +99,9 @@ def render_keyboard(letter_status):
                 tiles.append(colorize(letter, status))
             else:
                 tiles.append(f" {letter.upper()} ")
-            lines.append(" ".join(tiles))
-            return "\n".join(lines)
-        
+        lines.append(" ".join(tiles))
+    return "\n".join(lines)
+
 def update_letter_status(letter_status, guess, feedback):
 
     # the green beats the yellow and the yellow beats the gray so a letter never gets downgraded in the system
@@ -122,15 +123,15 @@ def is_real_word(word):
     """Ask a real online dictionary whether this word actually exists or not."""
     try:
         response = requests.get(f"{DICTIONARY_URL}/{word}", timeout=10)
-    except requests.RequestsException:
+    except requests.RequestException:
         print("Oops my bad I could not reach the dictionary...check your internet connection please. ")
         return False
     # returns thee status code
-    return response.status_code == 404
+    return response.status_code == 200
 def get_guess():
     while True:
         guess = input(f"\nGuess ({WORD_LENGTH} letters): ").strip().lower()
-        if len(GUESS) != WORD_LENGTH or not guess.isalpha():
+        if len(guess) != WORD_LENGTH or not guess.isalpha():
             print(f"Enter exactly {WORD_LENGTH} letters.")
             continue
         print("Checking the dictionary gimme a sec...")
@@ -180,13 +181,13 @@ def play():
             print(f"\n{remaining} guesses left. You can do this!")
     print(f"\nSorry, the word was '{secret.upper()}'. Better luck next time!")
 
-    if __name__ == "__main__":
-        play_again = True
-        while play_again:
-            play()
-            again = input("\nWanna play again? (y/n): ").strip().lower()
-            play_again = again.startswith("y")
-        print("Thank you so much for playing Wordy!!!")
+if __name__ == "__main__":
+    play_again = True
+    while play_again:
+        play()
+        again = input("\nWanna play again? (y/n): ").strip().lower()
+        play_again = again.startswith("y")
+    print("Thank you so much for playing Wordy!!!")
             
 
     
