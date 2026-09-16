@@ -121,11 +121,10 @@ def is_real_word(word):
     """Ask a real online dictionary whether this word actually exists or not."""
     try:
         response = requests.get(f"{DICTIONARY_URL}/{word}", timeout=10)
-    except requests.RequestException as e:
-        print("Oops my bad I could not reach the dictionary...check your internet connection please.")
-        print(f"(debug) network error: {e}")
+    except requests.RequestException:
+        print("Oops my bad I could not reach the dictionary...check your internet connection please. ")
         return False
-    print(f"(debug) status code for '{word}': {response.status_code}")
+    # returns thee status code
     return response.status_code == 200
 def get_guess():
     while True:
