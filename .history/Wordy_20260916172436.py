@@ -7,7 +7,6 @@ Two word lists are connected alongside this script which include answers.txt and
 """
 
 import random 
-import time
 from collections import Counter
 import requests
 
@@ -120,30 +119,14 @@ def update_letter_status(letter_status, guess, feedback):
             letter_status[letter] = "yellow"
 def is_real_word(word):
     """Ask a real online dictionary whether this word actually exists or not."""
-    # Try up to 3 times, since the dictionary service sometimes has a bad
-    # moment and just needs a second chance rather than being treated as
-    # "not a word."
-    for attempt in range(3):
-        try:
-            response = requests.get(f"{DICTIONARY_URL}/{word}", timeout=10)
-        except requests.RequestException:
-            time.sleep(1)
-            continue
-
-        if response.status_code == 200:
-            return True
-        if response.status_code == 404:
-            # This is the dictionary actually saying "not a word" - trust it.
-            return False
-
-        # Anything else (500, 522, 429, etc.) means the SERVICE messed up,
-        # not that your word is wrong. Wait a second and try again.
-        time.sleep(1)
-
-    # Still no clear answer after 3 tries - the service is probably down.
-    # Don't punish the player for that, so let the guess through.
-    print("The dictionary seems to be having issues right now, so I'll let this one through.")
-    return True
+    try:
+        response = requests.get(f"{DICTIONARY_URL}/{word}", timeout=10)
+    except requests.RequestException as e:
+        print("Oops my bad I could not reach the dictionary...check your internet connection please.")
+        print(f"(debug) network error: {e}")
+        return False
+    print(f"(debug) status code for '{word}': {response.status_code}")
+    return response.status_code == 200
 def get_guess():
     while True:
         guess = input(f"\nGuess ({WORD_LENGTH} letters): ").strip().lower()
@@ -204,3 +187,8 @@ if __name__ == "__main__":
         again = input("\nWanna play again? (y/n): ").strip().lower()
         play_again = again.startswith("y")
     print("Thank you so much for playing Wordy!!!")
+            
+
+    
+
+
