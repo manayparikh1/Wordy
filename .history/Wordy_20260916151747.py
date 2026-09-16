@@ -126,12 +126,12 @@ def is_real_word(word):
         print("Oops my bad I could not reach the dictionary...check your internet connection please. ")
         return False
     # returns thee status code
-    return response.status_code == 404
+    return response.status_code == 400
 def get_guess():
     while True:
         guess = input(f"\nGuess ({WORD_LENGTH} letters): ").strip().lower()
 
-        
+        if
 
 
 

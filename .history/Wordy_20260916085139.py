@@ -100,7 +100,6 @@ def render_keyboard(letter_status):
                 tiles.append(f" {letter.upper()} ")
             lines.append(" ".join(tiles))
             return "\n".join(lines)
-        
 def update_letter_status(letter_status, guess, feedback):
 
     # the green beats the yellow and the yellow beats the gray so a letter never gets downgraded in the system
@@ -118,24 +117,6 @@ def update_letter_status(letter_status, guess, feedback):
         #the green basically overwrites what was there and a new yellow only overwrites gray
         elif status == "yellow" and current_status == "gray":
             letter_status[letter] = "yellow"
-def is_real_word(word):
-    """Ask a real online dictionary whether this word actually exists or not."""
-    try:
-        response = requests.get(f"{DICTIONARY_URL}/{word}", timeout=10)
-    except requests.RequestsException:
-        print("Oops my bad I could not reach the dictionary...check your internet connection please. ")
-        return False
-    # returns thee status code
-    return response.status_code == 404
-def get_guess():
-    while True:
-        guess = input(f"\nGuess ({WORD_LENGTH} letters): ").strip().lower()
-
-        
-
-
-
-
 def get_guess(valid_guesses):
     while True:
         guess = input(f"\nGuess ({WORD_LENGTH} letters): ")
