@@ -138,34 +138,43 @@ def get_guess():
             print(f"'{guess}' isn't in the dictionary sadly so try another word. ")
             continue
         return guess
-def play():
-    print("Fetching todays word from the dictionary....")
-    try:
-        word_pool = fetch_secret_word_pool()
-    except requests.RequestException:
-        print("I could not reach Datamuse --- Can you check your internet connection?")
-        return
-    if not word_pool:
-        print("Did not get any usable words. Sorry. Try running it again.")
-        return
     
-    secret = choose_secret(word_pool)
+
+        
+
+
+
+
+def get_guess(valid_guesses):
+    while True:
+        guess = input(f"\nGuess ({WORD_LENGTH} letters): ")
+
+        if guess not in valid_guesses:
+            print(f"'{guess}' is NOT in the word list so please try another word.")
+            continue
+
+        if len(guess) != WORD_LENGTH or not guess.isalpha():
+            print(f"Enter exactly {WORD_LENGTH} letters and only letters please.")
+            continue
+        return guess
+def play():
+    answers = load_word_list("answers.txt")
+    valid_guesses = load_word_list("valid_guesses.txt") | answers
+    
+    secret = choose_secret(answers)
     guesses_made = []
     letter_status = {}
-    # I just added a visual divider to make it look more neat
-    print("=" * 35)
-    print("WORDLE")
-    print(f"You have {MAX_GUESSES} tries to guess the {WORD_LENGTH}-letter word. You got this.")
-    print("=" * 35)
 
-    # THIS will basically be the guesses for example if u guessed apple then visually it would look like this: ("APPLE", ["green","gray","yellow","gray","gray"]),
+    print("WORDY")
+    print("=" * 40)
+    print(f"So you have {MAX_GUESSES} guesses to find the secret word. Good luck dude!")
+    print("=" * 40)
 
     for attempt in range(1, MAX_GUESSES + 1):
-        guess = get_guess()
+        guess = get_guess(valid_guesses)
         feedback = compute_feedback(guess, secret)
         guesses_made.append((guess, feedback))
         update_letter_status(letter_status, guess, feedback)
-
         print()
         for g, fb in guesses_made:
             print(render_row(g, fb))
@@ -173,10 +182,20 @@ def play():
         print(render_keyboard(letter_status))
 
         if guess == secret:
+            print(f"\nYou got it in {attempt}/{MAX_GUESSES}!")
+            return
 
-    
+        remaining = MAX_GUESSES - attempt
+        if remaining > 0:
+            print(f"\n{remaining} guess{'es' if remaining !=1 else ''} left.")
 
 
-    
+    print(f"\nNo more guesses. The word was: {secret.upper()}")
 
-
+    if __name__ == "__main__":
+        play_again = True
+        while play_again:
+            play()
+            again = input("\nWanna Play Again? (y/n): ").strip().lower()
+            play_again = again.startswith("y")
+            print("Thank you very much for playing.")

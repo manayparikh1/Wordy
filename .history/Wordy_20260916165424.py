@@ -172,8 +172,7 @@ def play():
         print()
         print(render_keyboard(letter_status))
 
-        if guess == secret:
-
+        
     
 
 
